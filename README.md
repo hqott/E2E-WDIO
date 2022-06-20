@@ -15,7 +15,7 @@ $ export BASEURL=<your-tenant-url>
 #### Run test(s)
 ```console
 $ npm run wdio (run all the tests)
-$ npm run wdio -- --spec (run spec test)
+$ npm run wdio -- --spec npm run wdio -- --spec e2e/specs/testQlik.spec.ts (run spec test)
 ```
 #### Check report
 ```console
