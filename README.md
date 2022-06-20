@@ -2,9 +2,8 @@
 
 Download the repo, install npm packages and run tests
 ```console
-$ npm install
-$ npm run wdio (run all the tests)
-$ npm run wdio -- --spec (run spec test)
+$ git clone git@github.com:hqott/E2E-WDIO.git
+$ npm clean-install (Not suggest npm install)
 ```
 
 Set the environment variables
@@ -15,9 +14,15 @@ $ export BASEURL=<your-tenant-url>
 #### Run test(s)
 ```console
 $ npm run wdio (run all the tests)
-$ npm run wdio -- --spec npm run wdio -- --spec e2e/specs/testQlik.spec.ts (run spec test)
+$ npm run wdio -- --spec <test> (run spec test)
+  i.e: npm run wdio -- --spec e2e/specs/testQlik.spec.ts (run spec test)
 ```
 #### Check report
 ```console
-light weight report location: /results/htmlreports/e2e_Test_Report.html
+Light reporter is configurated into this project. The test report is auto generated and cleared for each test(s) run.
+Report location: /results/htmlreports/e2e_Test_Report.html
 ```
+
+## Improvements
+
+Some common functions in page/fragment level, like login/logout, should in helper function area.
