@@ -11,7 +11,7 @@ class Page {
     static async visit<T extends Page>(this: new (...constructorArgs: any[]) => T, ...args: any[]): T {
         const page = new this(...args) as T;
         page.open();
-        return page;
+        return await page;
     }
 
     private async open() {
