@@ -14,7 +14,7 @@ class HubHome extends Page {
   }
 
   async waitForPageReady() {
-    await this.topBar.waitForDisplayed();
+    await this.topBar.waitForLoaded();
   }
 
   async logout() {

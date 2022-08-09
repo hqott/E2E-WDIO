@@ -16,7 +16,7 @@ class NavigationTopBar extends PageFragment {
     return $("[data-testid='top-bar-profile-button']");
   }
 
-  async waitForDisplayed() {
+  async waitForLoaded() {
     return browser.waitUntil(
       async () => 
         (await this.$root.isDisplayed()) ===true &&
@@ -27,7 +27,7 @@ class NavigationTopBar extends PageFragment {
 
   private async openProfile() {
     await this.profileBtn.clickWhenClickable();
-    await this.profileMenu.waitForDisplayed();
+    await this.profileMenu.waitForLoaded();
   }
 
   async logout(){

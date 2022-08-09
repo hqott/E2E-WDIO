@@ -25,7 +25,7 @@ class LoginCard extends PageFragment {
     return $("button[name='submit']");
   }
 
-  async waitForDisplayed() {
+  async waitForLoaded() {
     return browser.waitUntil(
       async () => 
         (await this.$root.isDisplayed()) ===true &&

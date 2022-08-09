@@ -13,6 +13,6 @@
         "wdio-wait-for": "^2.2.6"
     },
     "scripts": {
-        "wdio": "wdio run ./wdio.conf.ts"
+        "wdio": "wdio run ./e2e/wdio.conf.ts"
     }
 }

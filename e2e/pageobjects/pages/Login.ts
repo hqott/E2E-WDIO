@@ -17,7 +17,7 @@ class Login extends Page {
   }
 
   async waitForPageReady() {
-    await this.loginCard.waitForDisplayed();
+    await this.loginCard.waitForLoaded();
   }
 
   async logIn(credentials: Credentials) {

@@ -12,7 +12,7 @@ class TableContainer extends PageFragment {
     return this.$root.$("table thead");
   }
 
-  async waitForDisplayed() {
+  async waitForLoaded() {
     return browser.waitUntil(
       async () =>
         (await this.$root.isDisplayed()) === true &&

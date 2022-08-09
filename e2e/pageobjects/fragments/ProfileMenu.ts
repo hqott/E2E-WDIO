@@ -17,10 +17,10 @@ class ProfileMenu extends PageFragment {
     await this.logoutBtn.clickWhenClickable();
   } 
 
-  async waitForDisplayed() {
+  async waitForLoaded() {
     return browser.waitUntil(
       async () => 
-        (await this.$root.isDisplayed()) ===true &&
+        (await this.$root.isDisplayed()) === true &&
         (await this.logoutBtn.isDisplayed()) === true,
         {timeout: 30000, timeoutMsg: 'The profile menu did not display'}
     );

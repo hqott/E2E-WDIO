@@ -1,6 +1,7 @@
 import Page from '../page';
 import PageFragment from '../pageFragment';
 import Table from '../fragments/tableContainer';
+import dialogSimple from '../fragments/dialogSimple'
 
 class ConsoleAssignment extends Page {
   addEntitlement: PageFragment;
@@ -11,7 +12,7 @@ class ConsoleAssignment extends Page {
     super('/console/license/assignment/');
     this.addEntitlement = new PageFragment(() => this.$addEntitelement);
     this.assignedUsersTab = new PageFragment(() => this.$assignedUsersTab);
-    this.table = new Table($("[data-testid='table-container']"));
+    this.table = new Table(()=>$("[data-testid='table-container']"));
   }
 
   private get $addEntitelement() {
@@ -22,8 +23,12 @@ class ConsoleAssignment extends Page {
     return $("[data-testid='license-management__tab-assignment']")
   }
 
+  get $analyzerSubmenu() {
+    return $("li[data-testid='license-assignments_add-assignment-select-analyzer']");
+  }
+
   async waitForPageReady() {
-    await this.table.waitForDisplayed();
+    await this.table.waitForLoaded();
     browser.waitUntil(
       async() =>
         (await this.assignedUsersTab.isEnabled()) === true, 
@@ -35,10 +40,18 @@ class ConsoleAssignment extends Page {
     return this.addEntitlement.clickWhenClickable();
   }
 
-  async addAddEntitlement() {
+  async addAddEntitlement(user, entitlement) {
     await this.clickAddEntitlement();
-    console.log('XXXXX')
-    ////////////
+    let comboxPopupSelectors = {
+      comboxPopupWithInputSelector: ".ant-select-combobox",
+      comboxPopupWithListselector: "[data-testid='license-assignments_add-assignment-select']"
+    }
+    let dialog = new dialogSimple(comboxPopupSelectors);
+    await dialog.waitForLoaded();
+    await dialog.comboxPopupWithInput.setInputValue(user);
+    await dialog.comboxPopupWithList.clickToSelectSubMenu(entitlement);
+    await browser.pause(1000) // Just for demo.
+    await dialog.close();
   }
 
 }

@@ -32,7 +32,7 @@ export default class PageFragment {
     return elem.waitForClickable(options);
   }
 
-  async waitForDisplayed(options?: WaitForOptions) {
+  async waitForLoaded(options?: WaitForOptions) {
     const elem = await this.$root;
     return elem.waitForDisplayed(options);
   }
