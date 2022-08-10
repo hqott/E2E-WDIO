@@ -1,7 +1,8 @@
 import Page from '../page';
 import PageFragment from '../pageFragment';
 import Table from '../fragments/tableContainer';
-import dialogSimple from '../fragments/dialogSimple'
+import dialogSimple from '../fragments/dialogSimple';
+
 
 class ConsoleAssignment extends Page {
   addEntitlement: PageFragment;
@@ -43,13 +44,13 @@ class ConsoleAssignment extends Page {
   async addAddEntitlement(user, entitlement) {
     await this.clickAddEntitlement();
     let comboxPopupSelectors = {
-      comboxPopupWithInputSelector: ".ant-select-combobox",
-      comboxPopupWithListselector: "[data-testid='license-assignments_add-assignment-select']"
+      comboxWithInputSelector: ".ant-select-combobox",
+      comboxWithListselector: "[data-testid='license-assignments_add-assignment-select']"
     }
     let dialog = new dialogSimple(comboxPopupSelectors);
     await dialog.waitForLoaded();
-    await dialog.comboxPopupWithInput.setInputValue(user);
-    await dialog.comboxPopupWithList.clickToSelectSubMenu(entitlement);
+    await dialog.comboxWithInput.setInputValue(user);
+    await dialog.clickComboxToSelectOption(dialog.comboxWithList,entitlement);
     await browser.pause(1000) // Just for demo.
     await dialog.close();
   }

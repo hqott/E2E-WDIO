@@ -12,7 +12,7 @@ describe('Login to Qlik as rootadmin', async () => {
 
     it('Go to console/assignment page', async () => {
         const consoleAssignment = await ConsoleAssignment.visit([]);
-        await consoleAssignment.addAddEntitlement("Harley Kiffe", consoleAssignment.$analyzerSubmenu);
+        await consoleAssignment.addAddEntitlement("Harley Kiffe", [consoleAssignment.$analyzerSubmenu]);
     });
 
     it('Go to space member', async () => {

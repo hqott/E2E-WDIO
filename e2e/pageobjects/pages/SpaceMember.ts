@@ -34,21 +34,18 @@ class SpaceMember extends Page {
     );
   }
 
-  async addMember(user:string, roles:string[]) {
+  async addMember(user: string, roles: string[]) {
     await this.clickAddMembers();
     let comboxPopupSelectors = {
-      comboxPopupWithInputSelector: "[role='combobox']",
-      comboxPopupWithListselector: "[data-testid='member-role-new']"
+      comboxWithInputSelector: "[role='combobox']",
+      comboxWithListselector: "[data-testid='member-role-new']"
     }
     let dialog = new dialogSimple(comboxPopupSelectors);
     await dialog.waitForLoaded();
-    await dialog.comboxPopupWithInput.setInputValue(user);
-    await dialog.comboxPopupWithList.selectMultipleSubMenu([await this.getOption(user)]);
-    await dialog.comboxPopupWithInput.selectedButtonInsideInput.waitForLoaded();
+    await dialog.comboxWithInput.setInputValue(user);
+    await dialog.selectOptions([await this.getOption(user)]);
     let newRoleList = roles.map((text) => $(`[data-testid="${text}"]`))
-    await dialog.comboxPopupWithList.clickToSelectSubMenu(newRoleList, true);
-    await browser.pause(500) // Just for demo.
-    await dialog.removePopup();
+    await dialog.clickComboxToSelectOption(dialog.comboxWithList, newRoleList)
     await browser.pause(1000) // Just for demo.
     await dialog.close();
   }

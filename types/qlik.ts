@@ -4,6 +4,6 @@ export type Credentials = {
 };
 
 export type ComboxSelectors = {
-  comboxPopupWithInputSelector: string;
-  comboxPopupWithListselector: string;
+  comboxWithInputSelector: string;
+  comboxWithListselector: string;
 };

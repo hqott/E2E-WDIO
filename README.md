@@ -13,6 +13,7 @@ $ export BASEURL=<your-tenant-url>
 
 #### Run test(s)
 ```console
+e2e $ npx wdio run ./wdio.conf.ts --spec ./specs/pageFragment.spec.ts
 $ npx run wdio (run all the tests)
 $ npm run wdio -- --spec <test> (run spec test)
   i.e: npm run wdio -- --spec ./specs/testQlik.spec.ts (run spec test)

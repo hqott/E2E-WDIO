@@ -1,23 +1,21 @@
 import PageFragment from '../pageFragment';
 import comboxHasPopup from '../fragments/comboxHasPopup';
-import { ComboxSelectors } from '../../../types/qlik'
+import { ComboxSelectors } from '../../../types/qlik';
+import optionsPopup from '../fragments/optionsPopup';
 
 class dialogSimple extends PageFragment {
   addBtn: PageFragment;
   closeBtn: PageFragment;
-  comboxPopupWithInput: comboxHasPopup;
-  comboxPopupWithList: comboxHasPopup;
-
-
+  comboxWithInput: comboxHasPopup;
+  comboxWithList: comboxHasPopup;
 
   constructor(selectors: ComboxSelectors) {
     super("[role='dialog']");
-   // this.comboxPopupWithInput = new comboxHasPopup(".ant-select-combobox");
-    if (selectors.comboxPopupWithInputSelector) {
-      this.comboxPopupWithInput = new comboxHasPopup(selectors.comboxPopupWithInputSelector);
+    if (selectors.comboxWithInputSelector) {
+      this.comboxWithInput = new comboxHasPopup(selectors.comboxWithInputSelector);
     }
-    if (selectors.comboxPopupWithListselector) {
-      this.comboxPopupWithList = new comboxHasPopup(selectors.comboxPopupWithListselector);
+    if (selectors.comboxWithListselector) {
+      this.comboxWithList = new comboxHasPopup(selectors.comboxWithListselector);
     }
     this.addBtn = new PageFragment(() => this.$addBtn);
     this.closeBtn = new PageFragment(() => this.$closeBtn);
@@ -29,10 +27,6 @@ class dialogSimple extends PageFragment {
 
   private get $closeBtn() {
     return this.$root.$("[data-testid='confirm-cancel-btn'],[data-testid='add-assignment-modal__close-button']");
-  }
-
-  get $selectionPopup() {
-    return $("ul[role='listbox']");
   }
 
   private async clickAddBtn() {
@@ -47,17 +41,30 @@ class dialogSimple extends PageFragment {
     await this.clickCloseBtn();
     await this.$root.waitForDisplayed({reverse:true});
   }
+  
+  async clickComboxToSelectOption(combox: comboxHasPopup, options) {
+    await combox.clickWhenClickable();
+    await this.selectOptions(options);
+  }
 
-  async removePopup() {
-    await this.$root.click({x: 1, y: 1});
-    await this.$selectionPopup.waitForDisplayed({reverse: true});
-  } 
+  async selectOptions(options) {
+    let optionListPopup = new optionsPopup();
+    await optionListPopup.waitForLoaded();
+    await options.forEach(async (option) => {
+      await optionListPopup.selectOption(option);
+    });
+    await browser.pause(1000)
+    if (await optionListPopup.isDisplayed()) {
+        await this.$root.click({ x: 1, y: 1 });
+    }
+    await optionListPopup.waitForDisappear();
+  }
 
   async waitForLoaded() {
     return browser.waitUntil(
       async () => 
         (await this.$root.isDisplayed()) === true &&
-        (await this.comboxPopupWithInput.isDisplayed()) === true,
+        (await this.comboxWithInput.isDisplayed()) === true,
         {timeout: 30000, timeoutMsg: 'The profile menu did not display'}
     );
   }
